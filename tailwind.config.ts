@@ -8,10 +8,15 @@ export default {
       white: "#fff",
       gray: {
         50: "#F9FAFB",
+        100: "#F3F4F6",
         200: "#D1D5DB",
         900: "#545454",
       },
-      red: "#bf360c",
+      red: {
+        50: "#FFE9E9",
+        200: "#FAC6B6",
+        900: "#bf360c",
+      },
     },
     extend: {
       fontFamily: {

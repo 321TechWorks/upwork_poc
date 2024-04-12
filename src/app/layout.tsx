@@ -36,7 +36,7 @@ export default async function RootLayout({
         <TRPCReactProvider>
           <header className="fixed top-0 flex h-24 w-full items-center justify-between bg-white px-28">
             <div></div>
-            <div className="text-red flex w-44 flex-col items-center">
+            <div className="flex w-44 flex-col items-center text-red-900">
               LICENSE YOUR PET
               <Image
                 priority
@@ -49,8 +49,8 @@ export default async function RootLayout({
               <UserAvatar />
             </div>
           </header>
-          <main className="mt-24">{children}</main>
-          <footer className="fixed bottom-0 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
+          <main className="m-24">{children}</main>
+          <footer className="fixed bottom-0 z-50 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
             <div>Powered by</div>
             <div>
               <Image

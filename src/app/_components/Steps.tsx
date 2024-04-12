@@ -24,7 +24,7 @@ export function Steps({ defaultValue, steps }: Props) {
     >
       {steps.map((step) => (
         <AccordionItem key={step.id} value={step.id} disabled={step.disabled}>
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between px-8">
             <div className="flex space-x-4">
               <div>{step.icon}</div>
               <div>{step.title}</div>
@@ -41,7 +41,7 @@ export function Steps({ defaultValue, steps }: Props) {
 const AccordionItem = forwardRef<HTMLDivElement, Accordion.AccordionItemProps>(
   ({ children, ...props }, forwardedRef) => (
     <Accordion.Item
-      className="mt-1 overflow-hidden rounded border border-gray-200 px-8 first:mt-0 focus-within:relative focus-within:z-10"
+      className="mt-1 rounded border border-gray-200 first:mt-0 focus-within:relative focus-within:z-10"
       {...props}
       ref={forwardedRef}
     >
@@ -59,7 +59,7 @@ const AccordionTrigger = forwardRef<
   <Accordion.Header className="flex">
     <Accordion.Trigger
       {...props}
-      className="group flex h-[45px] flex-1 cursor-default items-center justify-between bg-transparent px-5 text-[15px] leading-none outline-none"
+      className="bg-transparent group flex h-[45px] flex-1 cursor-default items-center justify-between px-5 text-[15px] leading-none outline-none"
       ref={forwardedRef}
     >
       {children}
@@ -76,10 +76,10 @@ const AccordionContent = forwardRef<
 >(({ children, ...props }, forwardedRef) => (
   <Accordion.Content
     {...props}
-    className="data-[state=open]:animate-slideDown data-[state=closed]:animate-slideUp overflow-hidden bg-transparent text-[15px]"
+    className="h-fit text-[15px] data-[state=closed]:animate-slideUp data-[state=open]:animate-slideDown"
     ref={forwardedRef}
   >
-    <div>{children}</div>
+    {children}
   </Accordion.Content>
 ));
 

@@ -1,4 +1,8 @@
+import { Button } from "../_components/Button";
+import { Calendar } from "../_components/Calendar";
 import { Checkbox } from "../_components/Checkbox";
+import { Input } from "../_components/Input";
+import { Select } from "../_components/Select";
 import { Steps } from "../_components/Steps";
 
 export default function AddPetPage() {
@@ -25,7 +29,17 @@ export default function AddPetPage() {
             id: "pet",
             icon: <Checkbox disabled />,
             title: "Add Pet",
-            content: "Add Pet",
+            content: (
+              <div className="flex flex-col space-y-4  bg-white p-8">
+                <Calendar />
+                <Button>Some button default</Button>
+                <Button className="bg-red-900 text-white">
+                  Some button red
+                </Button>
+                <Input placeholder="Some input" />
+                <Select />
+              </div>
+            ),
           },
         ]}
       />
