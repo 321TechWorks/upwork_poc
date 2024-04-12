@@ -6,26 +6,25 @@ import * as ScrollArea from "@radix-ui/react-scroll-area";
 import { Cross2Icon } from "@radix-ui/react-icons";
 
 type Props = React.PropsWithChildren<{
+  open: boolean;
   title: React.ReactNode;
-  content: (
-    renderClose: (node: React.ReactNode) => React.ReactNode,
-  ) => React.ReactNode;
+  onClose?: () => void;
 }>;
 
-export const Dialog = ({ children, title, content }: Props) => (
-  <RadixDialog.Root>
-    <RadixDialog.Trigger asChild>{children}</RadixDialog.Trigger>
+export const Dialog = ({ open, children, title, onClose }: Props) => (
+  <RadixDialog.Root
+    open={open}
+    onOpenChange={(isOpen) => {
+      !isOpen && onClose?.();
+    }}
+  >
     <RadixDialog.Portal>
-      <RadixDialog.Overlay className="bg-blackA6 data-[state=open]:animate-overlayShow fixed inset-0" />
-      <RadixDialog.Content className="data-[state=open]:animate-contentShow fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none">
-        <RadixDialog.Title className="text-mauve12 m-0 mb-4 text-[17px] font-medium">
-          <h3 className="font-black">{title}</h3>
-        </RadixDialog.Title>
+      <RadixDialog.Overlay className="bg-blackA6 fixed inset-0 data-[state=open]:animate-overlayShow" />
+      <RadixDialog.Content className="fixed left-[50%] top-[50%] translate-x-[-50%] translate-y-[-50%] rounded-[6px] bg-white p-[25px] shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] focus:outline-none data-[state=open]:animate-contentShow">
+        <RadixDialog.Title className="font-black">{title}</RadixDialog.Title>
         <ScrollArea.Root className="h-96">
           <ScrollArea.Viewport className="h-full w-full">
-            {content((node) => (
-              <RadixDialog.Close asChild>{node}</RadixDialog.Close>
-            ))}
+            {children}
           </ScrollArea.Viewport>
           <ScrollArea.Scrollbar
             className="bg-blackA3 hover:bg-blackA5 flex touch-none select-none p-0.5 transition-colors duration-[160ms] ease-out data-[orientation=horizontal]:h-2.5 data-[orientation=vertical]:w-2.5 data-[orientation=horizontal]:flex-col"

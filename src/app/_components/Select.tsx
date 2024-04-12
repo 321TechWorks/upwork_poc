@@ -8,18 +8,26 @@ import { twMerge } from "tailwind-merge";
 type Props = React.PropsWithChildren<{
   className?: string;
   placeholder?: string;
-  options: { value: string; label: string }[];
+  options: { value: string | number; description?: string }[];
+  value: string | number;
+  onChange: (value: string) => void;
 }>;
 
-export const Select = ({ className, placeholder, options }: Props) => (
-  <RadixSelect.Root>
+export const Select = ({
+  className,
+  placeholder,
+  options,
+  value,
+  onChange,
+}: Props) => (
+  <RadixSelect.Root value={String(value)} onValueChange={onChange}>
     <RadixSelect.Trigger
       className={twMerge(
-        "inline-flex items-center justify-between rounded-md border border-gray-200 p-4",
+        "placeholder-gray-500 inline-flex items-center justify-between truncate rounded-md border border-gray-200 p-4",
         className,
       )}
     >
-      <RadixSelect.Value placeholder={placeholder} className="text-gray-200" />
+      <RadixSelect.Value placeholder={placeholder} />
       <RadixSelect.Icon>
         <ChevronDownIcon />
       </RadixSelect.Icon>
@@ -28,8 +36,8 @@ export const Select = ({ className, placeholder, options }: Props) => (
       <RadixSelect.Content className="overflow-hidden rounded-md bg-white">
         <RadixSelect.Viewport className="p-[5px]">
           {options.map((option) => (
-            <SelectItem key={option.value} value={option.value}>
-              {option.label}
+            <SelectItem key={option.value} value={String(option.value)}>
+              {option.description ?? option.value}
             </SelectItem>
           ))}
         </RadixSelect.Viewport>

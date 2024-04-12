@@ -36,8 +36,16 @@ export default function AddPetPage() {
                 <Section className="flex flex-col space-y-4 p-4">
                   <h3>Rabies Vaccination Certificate</h3>
                   <div className="flex space-x-4">
-                    <CantFindFlow />
-                    <PetWaiverFlow />
+                    <CantFindFlow
+                      onSave={([pet, certificate]) => {
+                        console.log(pet, certificate);
+                      }}
+                    />
+                    <PetWaiverFlow
+                      onSave={([pet]) => {
+                        console.log(pet);
+                      }}
+                    />
                   </div>
                 </Section>
                 <div className="flex justify-between">
