@@ -32,7 +32,7 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`bg-lightGray font-sans ${fira.variable}`}>
+      <body className={`bg-gray-50 font-sans ${fira.variable}`}>
         <TRPCReactProvider>
           <header className="fixed top-0 flex h-24 w-full items-center justify-between bg-white px-28">
             <div></div>
@@ -49,8 +49,8 @@ export default async function RootLayout({
               <UserAvatar />
             </div>
           </header>
-          {children}
-          <footer className="bg-gray fixed bottom-0 flex h-24 w-full items-center justify-between px-28 text-white">
+          <main className="mt-24">{children}</main>
+          <footer className="fixed bottom-0 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
             <div>Powered by</div>
             <div>
               <Image
