@@ -49,7 +49,7 @@ export default async function RootLayout({
               <UserAvatar />
             </div>
           </header>
-          <main className="m-24">{children}</main>
+          <main className="relative top-24">{children}</main>
           <footer className="fixed bottom-0 z-50 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
             <div>Powered by</div>
             <div>

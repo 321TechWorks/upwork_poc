@@ -2,17 +2,20 @@
 
 import { twMerge } from "tailwind-merge";
 
-type Props = React.PropsWithChildren<{
-  className?: string;
-}>;
+type Props = React.PropsWithChildren<
+  {
+    className?: string;
+  } & React.ButtonHTMLAttributes<HTMLButtonElement>
+>;
 
-export function Button({ className, children }: Props) {
+export function Button({ className, children, ...props }: Props) {
   return (
     <button
       className={twMerge(
-        "bg-gray-100 text-black rounded-md px-8 py-4",
+        "text-black rounded-md bg-gray-100 px-8 py-4 disabled:opacity-50",
         className,
       )}
+      {...props}
     >
       {children}
     </button>
