@@ -5,13 +5,13 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { type Pet } from "@pp/domain/pet";
 import { certificateSchema, type Certificate } from "@pp/domain/certificate";
-import { Button } from "@pp/app/_components/Button";
-import { Dialog } from "@pp/app/_components/Dialog";
-import { Calendar } from "@pp/app/_components/Calendar";
-import { Input } from "@pp/app/_components/Input";
-import { Select } from "@pp/app/_components/Select";
-import { InputError } from "@pp/app/_components/InputError";
-import { submitMultipe } from "@pp/app/_utils/form";
+import { Button } from "@pp/app/(licensing)/_components/Button";
+import { Dialog } from "@pp/app/(licensing)/_components/Dialog";
+import { Calendar } from "@pp/app/(licensing)/_components/Calendar";
+import { Input } from "@pp/app/(licensing)/_components/Input";
+import { Select } from "@pp/app/(licensing)/_components/Select";
+import { InputError } from "@pp/app/(licensing)/_components/InputError";
+import { submitMultipe } from "@pp/app/(licensing)/_utils/form";
 import { useState } from "react";
 import { usePetForm } from "./usePetForm";
 
@@ -136,7 +136,7 @@ export function CantFindFlow({ onSave }: Props) {
                       <Input
                         className="w-full"
                         placeholder="Vaccine Producer (Optional)"
-                        value={field.value}
+                        value={field.value ?? ""}
                         onChange={field.onChange}
                       />
                       {fieldState.error && (
@@ -155,7 +155,7 @@ export function CantFindFlow({ onSave }: Props) {
                       <Input
                         className="w-full"
                         placeholder="Vaccine Lot (Optional)"
-                        value={field.value}
+                        value={field.value ?? ""}
                         onChange={field.onChange}
                       />
                       {fieldState.error && (
@@ -174,7 +174,7 @@ export function CantFindFlow({ onSave }: Props) {
                       <Input
                         className="w-full"
                         placeholder="Vaccine Serial (Optional)"
-                        value={field.value}
+                        value={field.value ?? ""}
                         onChange={field.onChange}
                       />
                       {fieldState.error && (
@@ -190,9 +190,9 @@ export function CantFindFlow({ onSave }: Props) {
                   name="vaccineLotExperiation"
                   render={({ field, fieldState }) => (
                     <>
-                      <Input
+                      <Calendar
                         className="w-full"
-                        placeholder="Vaccine Lot Experiation (Optional)"
+                        // placeholder="Vaccine Lot Experiation (Optional)"
                         value={field.value}
                         onChange={field.onChange}
                       />

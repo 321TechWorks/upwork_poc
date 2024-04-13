@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 export const petSchema = z.object({
+  id: z.number().optional(),
   photo: z.string().optional(),
   type: z.union([
     z.literal("dog", {

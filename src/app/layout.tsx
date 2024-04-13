@@ -9,7 +9,8 @@ import { getServerAuthSession } from "@pp/server/auth";
 import headerIcon from "../../public/images/headerIcon.svg";
 import logoWhite from "../../public/images/logoWhite.svg";
 
-import { UserAvatar } from "./_components/Avatar";
+import { UserAvatar } from "./(licensing)/_components/Avatar";
+import * as Scrollable from "./(licensing)/_components/Scrollable";
 
 const fira = Fira_Sans({
   subsets: ["latin"],
@@ -34,7 +35,7 @@ export default async function RootLayout({
     <html lang="en">
       <body className={`bg-gray-50 font-sans ${fira.variable}`}>
         <TRPCReactProvider>
-          <header className="fixed top-0 flex h-24 w-full items-center justify-between bg-white px-28">
+          <header className="flex h-24 w-full items-center justify-between bg-white px-28">
             <div></div>
             <div className="flex w-44 flex-col items-center text-red-900">
               LICENSE YOUR PET
@@ -49,8 +50,10 @@ export default async function RootLayout({
               <UserAvatar />
             </div>
           </header>
-          <main className="relative top-24">{children}</main>
-          <footer className="fixed bottom-0 z-50 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
+          <Scrollable.Container className="h-[calc(100vh-12rem)]">
+            <Scrollable.Content>{children}</Scrollable.Content>
+          </Scrollable.Container>
+          <footer className="z-50 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
             <div>Powered by</div>
             <div>
               <Image

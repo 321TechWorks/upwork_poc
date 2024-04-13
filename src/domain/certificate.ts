@@ -1,6 +1,7 @@
 import * as z from "zod";
 
 export const certificateSchema = z.object({
+  id: z.number().optional(),
   rabiesVaccinationDate: z.date({
     required_error: "This field is required",
     invalid_type_error: "This field is required",
@@ -16,10 +17,10 @@ export const certificateSchema = z.object({
     }),
   ]),
   vetFacilityName: z.string().min(1, { message: "This field is required" }),
-  vaccineProducer: z.string().optional(),
-  vaccineLot: z.string().optional(),
-  vaccineSerial: z.string().optional(),
-  vaccineLotExperiation: z.string().optional(),
+  vaccineProducer: z.string().optional().nullable(),
+  vaccineLot: z.string().optional().nullable(),
+  vaccineSerial: z.string().optional().nullable(),
+  vaccineLotExperiation: z.date().optional().nullable(),
 });
 
 export type Certificate = z.infer<typeof certificateSchema>;

@@ -4,11 +4,11 @@ import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { petSchema, type Pet } from "@pp/domain/pet";
-import { Calendar } from "@pp/app/_components/Calendar";
-import { Input } from "@pp/app/_components/Input";
-import { Section } from "@pp/app/_components/Section";
-import { Select } from "@pp/app/_components/Select";
-import { InputError } from "@pp/app/_components/InputError";
+import { Calendar } from "@pp/app/(licensing)/_components/Calendar";
+import { Input } from "@pp/app/(licensing)/_components/Input";
+import { Section } from "@pp/app/(licensing)/_components/Section";
+import { Select } from "@pp/app/(licensing)/_components/Select";
+import { InputError } from "@pp/app/(licensing)/_components/InputError";
 
 export function usePetForm() {
   const petForm = useForm<Pet>({

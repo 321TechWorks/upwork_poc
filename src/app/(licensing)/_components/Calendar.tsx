@@ -9,7 +9,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 type Props = {
   className?: string;
-  value?: Date;
+  value?: Date | null;
   onChange: () => void;
 };
 

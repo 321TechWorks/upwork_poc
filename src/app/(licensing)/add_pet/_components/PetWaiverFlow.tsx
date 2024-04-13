@@ -1,8 +1,8 @@
 "use client";
 
 import { type Pet } from "@pp/domain/pet";
-import { Button } from "@pp/app/_components/Button";
-import { Dialog } from "@pp/app/_components/Dialog";
+import { Button } from "@pp/app/(licensing)/_components/Button";
+import { Dialog } from "@pp/app/(licensing)/_components/Dialog";
 import { useState } from "react";
 import { usePetForm } from "./usePetForm";
 
@@ -27,7 +27,7 @@ export function PetWaiverFlow({ onSave }: Props) {
           setOpen(true);
         }}
       >
-        I can&apos;t find certificate
+        I have Pet Waiver
       </Button>
       <Dialog
         open={open}

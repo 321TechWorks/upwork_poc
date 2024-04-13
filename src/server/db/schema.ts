@@ -5,11 +5,8 @@ import {
   timestamp,
   varchar,
 } from "drizzle-orm/mysql-core";
-// import { type AdapterAccount } from "next-auth/adapters";
 
-import { petSchema } from "@pp/domain/pet";
-import { certificateSchema } from "@pp/domain/certificate";
-import {} from "@pp/domain/license";
+import { relations } from "drizzle-orm";
 
 /**
  * This is an example of how to use the multi-project schema feature of Drizzle ORM. Use the same
@@ -31,6 +28,20 @@ export const licenses = createTable("license", {
     .notNull()
     .references(() => certificates.id),
 });
+
+export const licensePetRelations = relations(licenses, ({ one }) => ({
+  pet: one(pets, {
+    fields: [licenses.petId],
+    references: [pets.id],
+  }),
+}));
+
+export const licenseCertificateRelations = relations(licenses, ({ one }) => ({
+  certificate: one(certificates, {
+    fields: [licenses.certificateId],
+    references: [certificates.id],
+  }),
+}));
 
 export const pets = createTable("pet", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
@@ -60,4 +71,5 @@ export const certificates = createTable("certificate", {
   vaccineProducer: varchar("vaccineProducer", { length: 256 }),
   vaccineLot: varchar("vaccineLot", { length: 256 }),
   vaccineSerial: varchar("vaccineSerial", { length: 256 }),
+  vaccineLotExperiation: timestamp("vaccineLotExperiation"),
 });

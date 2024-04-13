@@ -28,16 +28,37 @@ export const licenseRouter = createTRPCRouter({
         certificateId: certificateResult[0].insertId,
       });
     }),
-  getLicensesByOwner: protectedProcedure
-    .input(z.object({ ownerId: z.string() }))
-    .query(({ input, ctx }) => {
-      return ctx.db.query.licenses.findFirst({
-        where: (licenses, { eq }) =>
-          eq(licenses.ownerId, parseInt(input.ownerId)),
+  // getLicensesByOwner: protectedProcedure
+  //   .input(z.object({ ownerId: z.string() }))
+  //   .query(({ input, ctx }) => {
+  //     return ctx.db.query.licenses.findFirst({
+  //       where: (licenses, { eq }) =>
+  //         eq(licenses.ownerId, parseInt(input.ownerId)),
+  //       with: {
+  //         pet: true,
+  //         certificate: true,
+  //       },
+  //     });
+  //   }),
+  getLicensesById: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .query(async ({ input, ctx }) => {
+      const licenseWithRelated = await ctx.db.query.licenses.findFirst({
+        where: (licenses, { eq }) => eq(licenses.id, input.id),
         with: {
           pet: true,
           certificate: true,
         },
       });
+
+      // there is a known bug in drizzle https://github.com/drizzle-team/drizzle-orm/issues/824
+      return {
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        pet: petSchema.parse(licenseWithRelated?.pet),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        certificate: certificateSchema.parse(licenseWithRelated?.certificate),
+      };
     }),
 });
