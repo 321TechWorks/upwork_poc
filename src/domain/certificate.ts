@@ -8,11 +8,11 @@ export const certificateSchema = z.object({
   rabiesVaccinationDuration: z.union([
     z.literal(1, {
       description: "1 Year",
-      // errorMap: () => ({ message: "Select an option" }),
+      errorMap: () => ({ message: "Select an option" }),
     }),
     z.literal(3, {
       description: "3 Years",
-      // errorMap: () => ({ message: "Select an option" }),
+      errorMap: () => ({ message: "Select an option" }),
     }),
   ]),
   vetFacilityName: z.string().min(1, { message: "This field is required" }),

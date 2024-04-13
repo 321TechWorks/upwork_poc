@@ -4,6 +4,7 @@ import {
   type NextAuthOptions,
 } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
+import { db } from "./db";
 
 /**
  * Module augmentation for `next-auth` types. Allows us to add custom properties to the `session`
@@ -49,10 +50,16 @@ export const authOptions: NextAuthOptions = {
           credentials?.username === "test" &&
           credentials?.password === "test"
         ) {
+          const ttt = await db.query.owners.findFirst();
+
+          if (!ttt?.id) {
+            throw Error("");
+          }
+
           return {
-            id: "1",
+            id: String(ttt.id),
+            name: ttt.name,
             email: "test",
-            name: "TEST",
             image: "test",
           };
         }

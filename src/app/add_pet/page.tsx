@@ -4,8 +4,10 @@ import { Button } from "@pp/app/_components/Button";
 import { Checkbox } from "@pp/app/_components/Checkbox";
 import { Section } from "@pp/app/_components/Section";
 import { Steps } from "@pp/app/_components/Steps";
+
 import { CantFindFlow } from "./_components/CantFindFlow";
 import { PetWaiverFlow } from "./_components/PetWaiverFlow";
+import { createLicense } from "../actions/createLicense";
 
 export default function AddPetPage() {
   return (
@@ -36,11 +38,7 @@ export default function AddPetPage() {
                 <Section className="flex flex-col space-y-4 p-4">
                   <h3>Rabies Vaccination Certificate</h3>
                   <div className="flex space-x-4">
-                    <CantFindFlow
-                      onSave={([pet, certificate]) => {
-                        console.log(pet, certificate);
-                      }}
-                    />
+                    <CantFindFlow onSave={createLicense} />
                     <PetWaiverFlow
                       onSave={([pet]) => {
                         console.log(pet);

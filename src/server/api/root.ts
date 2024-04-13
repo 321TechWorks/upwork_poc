@@ -1,4 +1,4 @@
-import { postRouter } from "@pp/server/api/routers/post";
+import { licenseRouter } from "@pp/server/api/routers/licenses";
 import { createCallerFactory, createTRPCRouter } from "@pp/server/api/trpc";
 
 /**
@@ -7,7 +7,7 @@ import { createCallerFactory, createTRPCRouter } from "@pp/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  post: postRouter,
+  license: licenseRouter,
 });
 
 // export type definition of API
