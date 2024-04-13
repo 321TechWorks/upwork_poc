@@ -151,10 +151,15 @@ export function PetSection({ defaultPet, defaultCertificate }: Props) {
   } else {
     content = (
       <>
-        <CantFindFlow onSave={createLicense} />
+        <CantFindFlow
+          onSave={([pet, certificate]) => {
+            setPet(pet);
+            setCertificate(certificate);
+          }}
+        />
         <PetWaiverFlow
           onSave={([pet]) => {
-            console.log(pet);
+            setPet(pet);
           }}
         />
       </>
@@ -171,7 +176,15 @@ export function PetSection({ defaultPet, defaultCertificate }: Props) {
         <Button className="bg-transparent rounded-md border border-gray-200">
           Back
         </Button>
-        <Button className="bg-red-900 text-white" disabled={!pet}>
+        <Button
+          className="bg-red-900 text-white"
+          disabled={!pet}
+          onClick={async () => {
+            if (pet && certificate) {
+              await createLicense([pet, certificate]);
+            }
+          }}
+        >
           Continue
         </Button>
       </div>
