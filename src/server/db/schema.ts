@@ -29,6 +29,13 @@ export const licenses = createTable("license", {
     .references(() => certificates.id),
 });
 
+export const ownerPetRelations = relations(licenses, ({ one }) => ({
+  owner: one(owners, {
+    fields: [licenses.ownerId],
+    references: [owners.id],
+  }),
+}));
+
 export const licensePetRelations = relations(licenses, ({ one }) => ({
   pet: one(pets, {
     fields: [licenses.petId],
@@ -47,7 +54,6 @@ export const pets = createTable("pet", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   type: varchar("type", {
     length: 256,
-    // enum: petSchema.shape.type.options.map((o) => o.value),
   }).notNull(),
   weight: varchar("weight", { length: 256 }).notNull(),
   name: varchar("name", { length: 256 }).notNull(),
@@ -61,6 +67,9 @@ export const pets = createTable("pet", {
 export const owners = createTable("owner", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
   name: varchar("name", { length: 256 }).notNull(),
+  email: varchar("email", { length: 256 }).notNull().unique(),
+  address: varchar("address", { length: 256 }).notNull(),
+  phone: varchar("phone", { length: 256 }).notNull(),
 });
 
 export const certificates = createTable("certificate", {

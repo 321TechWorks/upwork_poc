@@ -9,7 +9,6 @@ import { getServerAuthSession } from "@pp/server/auth";
 import headerIcon from "../../public/images/headerIcon.svg";
 import logoWhite from "../../public/images/logoWhite.svg";
 
-import { UserAvatar } from "./(licensing)/_components/Avatar";
 import * as Scrollable from "./(licensing)/_components/Scrollable";
 
 const fira = Fira_Sans({
@@ -37,8 +36,10 @@ export default async function RootLayout({
         <TRPCReactProvider>
           <header className="flex h-[96px] w-full items-center justify-between bg-white px-28 py-5">
             <div></div>
-            <div className="text-red-primary flex h-[56px] w-[205px] flex-col items-center">
-              LICENSE YOUR PET
+            <div className="flex h-[56px] w-[205px] flex-col items-center">
+              <span className="text-red-primary text-sm md:text-base">
+                LICENSE YOUR PET
+              </span>
               <Image
                 priority
                 // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
@@ -47,7 +48,13 @@ export default async function RootLayout({
               />
             </div>
             <div>
-              <UserAvatar />
+              <Image
+                alt="avatar"
+                className="size-12 rounded-full"
+                src={session?.user.image ?? ""}
+                width={48}
+                height={48}
+              />
             </div>
           </header>
           <Scrollable.Container className="h-[calc(100vh-88px-96px)]">

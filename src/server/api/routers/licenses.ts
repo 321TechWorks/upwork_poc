@@ -4,29 +4,30 @@ import { createTRPCRouter, protectedProcedure } from "@pp/server/api/trpc";
 import { ownerSchema } from "@pp/domain/owner";
 import { petSchema } from "@pp/domain/pet";
 import { certificateSchema } from "@pp/domain/certificate";
-import { pets, owners, certificates, licenses } from "@pp/server/db/schema";
+import { pets, certificates, licenses } from "@pp/server/db/schema";
 
 export const licenseRouter = createTRPCRouter({
   createLicense: protectedProcedure
     .input(
       z.object({
-        owner: ownerSchema,
+        ownerId: z.number(),
         pet: petSchema,
         certificate: certificateSchema,
       }),
     )
     .mutation(async ({ ctx, input }) => {
-      const [petResult, ownerResult, certificateResult] = await Promise.all([
+      const [petResult, certificateResult] = await Promise.all([
         ctx.db.insert(pets).values(input.pet),
-        ctx.db.insert(owners).values(input.owner),
         ctx.db.insert(certificates).values(input.certificate),
       ]);
 
-      return ctx.db.insert(licenses).values({
+      const created = await ctx.db.insert(licenses).values({
+        ownerId: input.ownerId,
         petId: petResult[0].insertId,
-        ownerId: ownerResult[0].insertId,
         certificateId: certificateResult[0].insertId,
       });
+
+      return { id: created[0].insertId };
     }),
   // getLicensesByOwner: protectedProcedure
   //   .input(z.object({ ownerId: z.string() }))
@@ -46,10 +47,13 @@ export const licenseRouter = createTRPCRouter({
       const licenseWithRelated = await ctx.db.query.licenses.findFirst({
         where: (licenses, { eq }) => eq(licenses.id, input.id),
         with: {
+          owner: true,
           pet: true,
           certificate: true,
         },
       });
+
+      if (!licenseWithRelated) return null;
 
       // there is a known bug in drizzle https://github.com/drizzle-team/drizzle-orm/issues/824
       return {
@@ -59,6 +63,9 @@ export const licenseRouter = createTRPCRouter({
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         certificate: certificateSchema.parse(licenseWithRelated?.certificate),
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-expect-error
+        owner: ownerSchema.parse(licenseWithRelated?.owner),
       };
     }),
 });

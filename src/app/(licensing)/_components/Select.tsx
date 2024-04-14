@@ -33,7 +33,7 @@ export const Select = ({
       </RadixSelect.Icon>
     </RadixSelect.Trigger>
     <RadixSelect.Portal>
-      <RadixSelect.Content className="overflow-hidden rounded-md bg-white">
+      <RadixSelect.Content className="z-50 overflow-hidden rounded-md bg-white">
         <RadixSelect.Viewport className="p-[5px]">
           {options.map((option) => (
             <SelectItem key={option.value} value={String(option.value)}>

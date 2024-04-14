@@ -9,5 +9,4 @@ export default {
     uri: env.DATABASE_URL,
   },
   tablesFilter: ["pet_parent_*"],
-  out: "./drizzle",
 } satisfies Config;

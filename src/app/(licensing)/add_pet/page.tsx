@@ -5,13 +5,14 @@ import { StepsNavigation } from "@pp/app/(licensing)/_components/StepsNavigation
 
 import { PetSection } from "./_components/PetSection";
 import { useLicense } from "../useLicense";
+import { KeyValueBlock } from "../_components/KeyValueBlock";
 
 export default async function AddPetPage({
   searchParams,
 }: {
   searchParams?: { licenseId?: string };
 }) {
-  const [pet, certificate] = await useLicense(searchParams?.licenseId);
+  const { owner, pet, certificate } = await useLicense(searchParams?.licenseId);
 
   return (
     <StepPageLayout
@@ -49,7 +50,29 @@ export default async function AddPetPage({
             disabled: true,
             icon: <Checkbox disabled defaultChecked />,
             title: "Pet Owner",
-            content: "Pet Owner",
+            content: (
+              <div className="grid grid-cols-1 gap-4 px-[72px] sm:grid-cols-2">
+                <div>
+                  <KeyValueBlock
+                    rows={[
+                      { key: "Name:", value: owner?.name ?? "--" },
+                      { key: "Email:", value: owner?.email ?? "--" },
+                    ]}
+                  />
+                </div>
+                <div>
+                  <KeyValueBlock
+                    rows={[
+                      { key: "Address:", value: owner?.address ?? "--" },
+                      {
+                        key: "Phone Number:",
+                        value: owner?.phone ?? "--",
+                      },
+                    ]}
+                  />
+                </div>
+              </div>
+            ),
           },
           {
             id: "pet",

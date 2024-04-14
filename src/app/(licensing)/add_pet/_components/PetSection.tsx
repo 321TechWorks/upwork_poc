@@ -1,18 +1,20 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Link from "next/link";
+
 import { petSchema, type Pet } from "@pp/domain/pet";
 import { certificateSchema, type Certificate } from "@pp/domain/certificate";
 import { Section } from "@pp/app/(licensing)/_components/Section";
 import { Button } from "@pp/app/(licensing)/_components/Button";
+import { KeyValueBlock } from "@pp/app/(licensing)/_components/KeyValueBlock";
+import { StepContent } from "@pp/app/(licensing)/_components/StepContent";
 
 import { createLicense } from "../../actions/createLicense";
 
 import { CantFindFlow } from "./CantFindFlow";
 import { PetWaiverFlow } from "./PetWaiverFlow";
-import { useState } from "react";
-import { KeyValueBlock } from "../../_components/KeyValueBlock";
-import Link from "next/link";
-import { StepContent } from "../../_components/StepContent";
 
 type Props = {
   licenseId?: string;
@@ -25,6 +27,8 @@ export function PetSection({
   defaultPet,
   defaultCertificate,
 }: Props) {
+  const router = useRouter();
+
   const [pet, setPet] = useState(defaultPet);
   const [certificate, setCertificate] = useState(defaultCertificate);
 
@@ -195,9 +199,16 @@ export function PetSection({
           className="bg-red-primary border-red-primary text-white"
           disabled={!pet}
           onClick={async () => {
-            if (pet && certificate) {
-              await createLicense([pet, certificate]);
-            }
+            const license =
+              !licenseId && pet && certificate
+                ? await createLicense([pet, certificate])
+                : { id: licenseId ?? "" };
+
+            router.push(
+              `/license_pet?${new URLSearchParams({
+                licenseId: String(license.id),
+              }).toString()}`,
+            );
           }}
         >
           Continue

@@ -10,11 +10,14 @@ export async function createLicense([pet, certificate]: [
   certificate: Certificate,
 ]) {
   const session = await getServerAuthSession();
-  await api.license.createLicense({
+
+  if (!session?.user.id) {
+    throw Error("No user id in session");
+  }
+
+  return api.license.createLicense({
     pet,
     certificate,
-    owner: {
-      name: session?.user.name ?? "TEST",
-    },
+    ownerId: parseInt(session.user.id),
   });
 }

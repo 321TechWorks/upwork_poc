@@ -13,7 +13,7 @@ export function StepsNavigation({ active, steps }: Props) {
   const activeStepIndex = steps.findIndex((step) => active === step.id);
 
   return (
-    <div className="flex justify-between px-[90px]">
+    <div className="flex justify-between px-2 sm:px-[90px]">
       {steps.map((step, index) => {
         const isLast = index === steps.length - 1;
 
@@ -35,7 +35,7 @@ export function StepsNavigation({ active, steps }: Props) {
               {index + 1}
             </div>
             <span className="text-gray-800 ml-1 text-sm">{step.title}</span>
-            {!isLast && <hr className="grow border-4" />}
+            {!isLast && <hr className="hidden grow border-4 sm:block" />}
           </Link>
         );
       })}

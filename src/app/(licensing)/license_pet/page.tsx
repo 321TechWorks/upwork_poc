@@ -9,13 +9,14 @@ import { Section } from "../_components/Section";
 import { KeyValueBlock } from "../_components/KeyValueBlock";
 import { useLicense } from "../useLicense";
 import { petSchema } from "@pp/domain/pet";
+import { StepSummary } from "../_components/StepSummary";
 
 export default async function LicensePetPage({
   searchParams,
 }: {
   searchParams?: { licenseId?: string };
 }) {
-  const [pet, certificate] = await useLicense(searchParams?.licenseId);
+  const { pet, owner, certificate } = await useLicense(searchParams?.licenseId);
 
   return (
     <StepPageLayout
@@ -62,6 +63,17 @@ export default async function LicensePetPage({
             disabled: true,
             icon: <Checkbox disabled defaultChecked />,
             title: "Pet Owner",
+            summary: (
+              <StepSummary
+                className="ml-[20px] md:ml-[50px] lg:ml-[100px] xl:ml-[170px]"
+                entries={[
+                  owner && {
+                    key: owner.name,
+                    value: owner.address,
+                  },
+                ]}
+              />
+            ),
           },
           {
             id: "pet",
@@ -69,32 +81,26 @@ export default async function LicensePetPage({
             icon: <Checkbox disabled defaultChecked />,
             title: "Pet added",
             summary: (
-              <div className="ml-[170px] flex space-x-[53px]">
-                {pet && (
-                  <div className="flex space-x-2">
-                    <span>
-                      {petSchema.shape.type.options.find(
+              <StepSummary
+                className="ml-[20px] md:ml-[50px] lg:ml-[100px] xl:ml-[170px]"
+                entries={[
+                  pet && {
+                    key:
+                      petSchema.shape.type.options.find(
                         (o) => o.value === pet.type,
-                      )?.description ?? "Unknown"}
-                    </span>
-                    <div>|</div>
-                    <span>{pet.name}</span>
-                  </div>
-                )}
-                {certificate && (
-                  <div className="flex space-x-2">
-                    <span>VAC</span>
-                    <div>|</div>
-                    <span>
-                      {String(
-                        new Intl.DateTimeFormat("en-US").format(
-                          certificate.rabiesVaccinationDate,
-                        ),
-                      )}
-                    </span>
-                  </div>
-                )}
-              </div>
+                      )?.description ?? "Unknown",
+                    value: pet.name,
+                  },
+                  certificate && {
+                    key: "VAC",
+                    value: String(
+                      new Intl.DateTimeFormat("en-US").format(
+                        certificate.rabiesVaccinationDate,
+                      ),
+                    ),
+                  },
+                ]}
+              />
             ),
           },
           {
