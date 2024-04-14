@@ -18,6 +18,12 @@ export const createTable = mysqlTableCreator((name) => `pet_parent_${name}`);
 
 export const licenses = createTable("license", {
   id: bigint("id", { mode: "number" }).primaryKey().autoincrement(),
+  status: varchar("weight", {
+    length: 256,
+    enum: ["new", "in cart"],
+  })
+    .notNull()
+    .default("new"),
   petId: bigint("petId", { mode: "number" })
     .notNull()
     .references(() => pets.id),
@@ -27,6 +33,10 @@ export const licenses = createTable("license", {
   certificateId: bigint("certificateId", { mode: "number" })
     .notNull()
     .references(() => certificates.id),
+  date: timestamp("date").notNull().defaultNow(),
+  expire: timestamp("expire")
+    .notNull()
+    .default(new Date(getOneYearAfterNowTimestamp())),
 });
 
 export const ownerPetRelations = relations(licenses, ({ one }) => ({
@@ -82,3 +92,7 @@ export const certificates = createTable("certificate", {
   vaccineSerial: varchar("vaccineSerial", { length: 256 }),
   vaccineLotExperiation: timestamp("vaccineLotExperiation"),
 });
+
+function getOneYearAfterNowTimestamp() {
+  return ((d) => d.setFullYear(d.getFullYear() + 1))(new Date());
+}

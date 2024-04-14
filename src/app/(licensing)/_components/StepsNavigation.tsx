@@ -25,16 +25,16 @@ export function StepsNavigation({ active, steps }: Props) {
           >
             <div
               className={twMerge(
-                "border-red-primary text-red-primary flex size-8 items-center justify-center rounded-full border",
+                "flex size-8 items-center justify-center rounded-full border border-red-primary text-red-primary",
                 active === step.id ? "bg-red-primary text-white" : null,
                 index > activeStepIndex
-                  ? "text-gray-800 border-gray-200 bg-gray-200"
+                  ? "border-gray-200 bg-gray-200 text-gray-800"
                   : null,
               )}
             >
               {index + 1}
             </div>
-            <span className="text-gray-800 ml-1 text-sm">{step.title}</span>
+            <span className="ml-1 text-sm text-gray-800">{step.title}</span>
             {!isLast && <hr className="hidden grow border-4 sm:block" />}
           </Link>
         );

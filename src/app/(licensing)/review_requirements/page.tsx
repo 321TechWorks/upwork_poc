@@ -1,9 +1,12 @@
+import Link from "next/link";
+
+import { licenseFees } from "@pp/domain/fees";
 import { Button } from "@pp/app/(licensing)/_components/Button";
 import { Checkbox } from "@pp/app/(licensing)/_components/Checkbox";
 import { Steps } from "@pp/app/(licensing)/_components/Steps";
+
 import { StepsNavigation } from "../_components/StepsNavigation";
 import { StepPageLayout } from "../_components/StepPageLayout";
-import Link from "next/link";
 import { StepContent } from "../_components/StepContent";
 
 export default async function ReviewRequirementsPage({
@@ -70,24 +73,38 @@ export default async function ReviewRequirementsPage({
                   <h3>Licenses Fees</h3>
                   <span>1 Year</span>
                 </div>
-                <table className="border-collapse border border-red-50">
-                  <thead>
-                    <tr className="bg-red-50 text-left">
-                      <th className="w-1/2 border border-red-50 p-4">DOG</th>
-                      <th className="w-1/2 border border-red-50 p-4">PRICE</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td className="w-1/2 border border-red-50 p-4">
-                        Dangerous Dog
-                      </td>
-                      <td className="w-1/2 border border-red-50 p-4">
-                        $300.00
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
+                {Object.keys(licenseFees).map((petType) => (
+                  <table
+                    key={petType}
+                    className="border-collapse border border-red-50"
+                  >
+                    <thead>
+                      <tr className="bg-red-50 text-left">
+                        <th className="w-1/2 border border-red-50 p-4">
+                          {petType}
+                        </th>
+                        <th className="w-1/2 border border-red-50 p-4">
+                          PRICE
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {Object.entries(
+                        licenseFees[petType as keyof typeof licenseFees],
+                      ).map(([entry, price]) => (
+                        <tr key={petType + entry + String(price)}>
+                          <td className="w-1/2 border border-red-50 p-4">
+                            {entry}
+                          </td>
+                          <td className="w-1/2 border border-red-50 p-4">
+                            ${String(price)}
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                ))}
+
                 <div className="flex justify-between">
                   <Link
                     className="ml-auto "
@@ -98,7 +115,7 @@ export default async function ReviewRequirementsPage({
                       }).toString(),
                     }}
                   >
-                    <Button className="bg-red-primary border-red-primary text-white">
+                    <Button className="border-red-primary bg-red-primary text-white">
                       Continue
                     </Button>
                   </Link>

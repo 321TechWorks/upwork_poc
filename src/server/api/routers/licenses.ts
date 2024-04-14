@@ -5,6 +5,7 @@ import { ownerSchema } from "@pp/domain/owner";
 import { petSchema } from "@pp/domain/pet";
 import { certificateSchema } from "@pp/domain/certificate";
 import { pets, certificates, licenses } from "@pp/server/db/schema";
+import { eq } from "drizzle-orm";
 
 export const licenseRouter = createTRPCRouter({
   createLicense: protectedProcedure
@@ -29,7 +30,16 @@ export const licenseRouter = createTRPCRouter({
 
       return { id: created[0].insertId };
     }),
-  // getLicensesByOwner: protectedProcedure
+
+  addToCart: protectedProcedure
+    .input(z.object({ id: z.number() }))
+    .mutation(async ({ ctx, input }) => {
+      return ctx.db
+        .update(licenses)
+        .set({ status: "in cart" })
+        .where(eq(licenses.id, input.id));
+    }),
+
   //   .input(z.object({ ownerId: z.string() }))
   //   .query(({ input, ctx }) => {
   //     return ctx.db.query.licenses.findFirst({
@@ -57,6 +67,7 @@ export const licenseRouter = createTRPCRouter({
 
       // there is a known bug in drizzle https://github.com/drizzle-team/drizzle-orm/issues/824
       return {
+        ...licenseWithRelated,
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-expect-error
         pet: petSchema.parse(licenseWithRelated?.pet),
@@ -68,4 +79,12 @@ export const licenseRouter = createTRPCRouter({
         owner: ownerSchema.parse(licenseWithRelated?.owner),
       };
     }),
+
+  getAllLicenses: protectedProcedure.query(async ({ ctx }) => {
+    return ctx.db.query.licenses.findMany({
+      with: {
+        owner: true,
+      },
+    });
+  }),
 });

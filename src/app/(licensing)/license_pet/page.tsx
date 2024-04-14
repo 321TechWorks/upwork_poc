@@ -10,13 +10,16 @@ import { KeyValueBlock } from "../_components/KeyValueBlock";
 import { useLicense } from "../useLicense";
 import { petSchema } from "@pp/domain/pet";
 import { StepSummary } from "../_components/StepSummary";
+import { AddToCartButton } from "./_component/AddToCartButton";
 
 export default async function LicensePetPage({
   searchParams,
 }: {
   searchParams?: { licenseId?: string };
 }) {
-  const { pet, owner, certificate } = await useLicense(searchParams?.licenseId);
+  const { pet, owner, certificate, license } = await useLicense(
+    searchParams?.licenseId,
+  );
 
   return (
     <StepPageLayout
@@ -116,9 +119,7 @@ export default async function LicensePetPage({
                   <Button className="border-gray-50 bg-gray-50">
                     Pay by Check
                   </Button>
-                  <Button className="border-gray-50 bg-gray-50">
-                    Add to Cart
-                  </Button>
+                  <AddToCartButton licenseId={searchParams?.licenseId} />
                 </div>
                 <Section>
                   <div className="grid w-full grid-cols-1 gap-4 p-4 lg:grid-cols-3">
@@ -130,7 +131,7 @@ export default async function LicensePetPage({
                             key: "License Date:",
                             value: String(
                               new Intl.DateTimeFormat("en-US").format(
-                                new Date(),
+                                license?.date,
                               ),
                             ),
                           },
@@ -145,9 +146,7 @@ export default async function LicensePetPage({
                             key: "Expiriation",
                             value: String(
                               new Intl.DateTimeFormat("en-US").format(
-                                ((d) => d.setFullYear(d.getFullYear() + 1))(
-                                  new Date(),
-                                ),
+                                license?.expire,
                               ),
                             ),
                           },
