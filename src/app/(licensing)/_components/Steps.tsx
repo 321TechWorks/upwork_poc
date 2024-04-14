@@ -12,6 +12,7 @@ export type StepsProps = {
     icon?: React.ReactNode;
     link?: LinkProps["href"];
     content?: React.ReactNode;
+    summary?: React.ReactNode;
     disabled?: boolean;
   }[];
 };
@@ -33,6 +34,7 @@ export function Steps({ defaultValue, steps }: Props) {
             <div className="flex space-x-4">
               <div>{step.icon}</div>
               <div>{step.title}</div>
+              <div>{step.summary}</div>
             </div>
             <AccordionTrigger />
           </div>

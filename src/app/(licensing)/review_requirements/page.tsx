@@ -4,6 +4,7 @@ import { Steps } from "@pp/app/(licensing)/_components/Steps";
 import { StepsNavigation } from "../_components/StepsNavigation";
 import { StepPageLayout } from "../_components/StepPageLayout";
 import Link from "next/link";
+import { StepContent } from "../_components/StepContent";
 
 export default async function ReviewRequirementsPage({
   searchParams,
@@ -40,7 +41,7 @@ export default async function ReviewRequirementsPage({
             icon: <Checkbox disabled />,
             title: "Requirements Reviewed",
             content: (
-              <div className="flex flex-col space-y-4 bg-white p-8">
+              <StepContent>
                 <h3>Licensing Ordinance</h3>
                 <span>
                   All dogs, cats, and ferrets 4 months of age and older must be
@@ -102,7 +103,7 @@ export default async function ReviewRequirementsPage({
                     </Button>
                   </Link>
                 </div>
-              </div>
+              </StepContent>
             ),
           },
         ]}

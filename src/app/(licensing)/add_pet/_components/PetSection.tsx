@@ -12,6 +12,7 @@ import { PetWaiverFlow } from "./PetWaiverFlow";
 import { useState } from "react";
 import { KeyValueBlock } from "../../_components/KeyValueBlock";
 import Link from "next/link";
+import { StepContent } from "../../_components/StepContent";
 
 type Props = {
   licenseId?: string;
@@ -173,7 +174,7 @@ export function PetSection({
   }
 
   return (
-    <div className="flex flex-col space-y-4 bg-white p-8">
+    <StepContent>
       <Section className="flex flex-col space-y-4 p-4">
         <h3>Rabies Vaccination Certificate</h3>
         <div className="flex w-full space-x-4">{content}</div>
@@ -202,6 +203,6 @@ export function PetSection({
           Continue
         </Button>
       </div>
-    </div>
+    </StepContent>
   );
 }

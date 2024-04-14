@@ -1,29 +1,18 @@
-import { api } from "@pp/trpc/server";
-import { type Pet } from "@pp/domain/pet";
-import { type Certificate } from "@pp/domain/certificate";
 import { Checkbox } from "@pp/app/(licensing)/_components/Checkbox";
 import { Steps } from "@pp/app/(licensing)/_components/Steps";
 import { StepPageLayout } from "@pp/app/(licensing)/_components/StepPageLayout";
 import { StepsNavigation } from "@pp/app/(licensing)/_components/StepsNavigation";
 
 import { PetSection } from "./_components/PetSection";
+import { useLicense } from "../useLicense";
 
 export default async function AddPetPage({
   searchParams,
 }: {
   searchParams?: { licenseId?: string };
 }) {
-  let pet: Pet | null = null;
-  let certificate: Certificate | null = null;
+  const [pet, certificate] = await useLicense(searchParams?.licenseId);
 
-  if (searchParams?.licenseId) {
-    const license = await api.license.getLicensesById({
-      id: parseInt(searchParams.licenseId),
-    });
-
-    pet = license.pet;
-    certificate = license.certificate;
-  }
   return (
     <StepPageLayout
       progress={
@@ -52,14 +41,13 @@ export default async function AddPetPage({
           {
             id: "review",
             disabled: true,
-            icon: <Checkbox defaultChecked />,
+            icon: <Checkbox disabled defaultChecked />,
             title: "Requirements Reviewed",
-            content: "Requirements Reviewed",
           },
           {
             id: "owner",
             disabled: true,
-            icon: <Checkbox defaultChecked />,
+            icon: <Checkbox disabled defaultChecked />,
             title: "Pet Owner",
             content: "Pet Owner",
           },

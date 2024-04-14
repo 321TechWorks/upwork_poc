@@ -33,9 +33,9 @@ export default async function RootLayout({
 
   return (
     <html lang="en">
-      <body className={`bg-gray-50 font-sans ${fira.variable}`}>
+      <body className={`bg-gray-50 font-sans ${fira.variable} min-h-screen`}>
         <TRPCReactProvider>
-          <header className="flex h-24 w-full items-center justify-between bg-white px-28">
+          <header className="flex h-[96px] w-full items-center justify-between bg-white px-28 py-5">
             <div></div>
             <div className="text-red-primary flex h-[56px] w-[205px] flex-col items-center">
               LICENSE YOUR PET
@@ -50,10 +50,10 @@ export default async function RootLayout({
               <UserAvatar />
             </div>
           </header>
-          <Scrollable.Container className="h-[calc(100vh-12rem)]">
+          <Scrollable.Container className="h-[calc(100vh-88px-96px)]">
             <Scrollable.Content>{children}</Scrollable.Content>
           </Scrollable.Container>
-          <footer className="absolute bottom-0 z-50 flex h-[88px] w-full items-center justify-between bg-[#545454] px-28 text-white">
+          <footer className="z-50 flex h-[88px] w-full items-center justify-between bg-[#545454] px-28 text-white">
             <div>Powered by</div>
             <div>
               <Image
