@@ -46,6 +46,7 @@ export function CantFindFlow({ onSave }: Props) {
   return (
     <>
       <Button
+        className="border-gray-50 bg-gray-50"
         onClick={() => {
           setOpen(true);
         }}
@@ -214,7 +215,7 @@ export function CantFindFlow({ onSave }: Props) {
               Cancel
             </Button>
             <Button
-              className="bg-red-900 text-white"
+              className="bg-red-primary text-white"
               onClick={submitMultipe(
                 petForm,
                 certificateForm,

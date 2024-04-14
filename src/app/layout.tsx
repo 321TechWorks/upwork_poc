@@ -37,7 +37,7 @@ export default async function RootLayout({
         <TRPCReactProvider>
           <header className="flex h-24 w-full items-center justify-between bg-white px-28">
             <div></div>
-            <div className="flex w-44 flex-col items-center text-red-900">
+            <div className="text-red-primary flex h-[56px] w-[205px] flex-col items-center">
               LICENSE YOUR PET
               <Image
                 priority
@@ -53,7 +53,7 @@ export default async function RootLayout({
           <Scrollable.Container className="h-[calc(100vh-12rem)]">
             <Scrollable.Content>{children}</Scrollable.Content>
           </Scrollable.Container>
-          <footer className="z-50 flex h-24 w-full items-center justify-between bg-gray-900 px-28 text-white">
+          <footer className="absolute bottom-0 z-50 flex h-[88px] w-full items-center justify-between bg-[#545454] px-28 text-white">
             <div>Powered by</div>
             <div>
               <Image

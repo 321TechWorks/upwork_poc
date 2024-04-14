@@ -8,7 +8,7 @@ type Props = React.PropsWithChildren<{
 
 export function InputError({ className, children }: Props) {
   return (
-    <span className={twMerge("px-2 text-xs text-red-900", className)}>
+    <span className={twMerge("text-red-primary px-2 text-xs", className)}>
       {children}
     </span>
   );

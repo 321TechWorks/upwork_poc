@@ -4,22 +4,12 @@ import { fontFamily } from "tailwindcss/defaultTheme";
 export default {
   content: ["./src/**/*.tsx"],
   theme: {
-    colors: {
-      white: "#fff",
-      gray: {
-        50: "#F9FAFB",
-        100: "#F3F4F6",
-        200: "#D1D5DB",
-        600: "#929292",
-        900: "#545454",
-      },
-      red: {
-        50: "#FFE9E9",
-        200: "#FAC6B6",
-        900: "#bf360c",
-      },
-    },
     extend: {
+      colors: {
+        red: {
+          primary: "#bf360c",
+        },
+      },
       fontFamily: {
         sans: ["var(--font-sans)", ...fontFamily.sans],
       },

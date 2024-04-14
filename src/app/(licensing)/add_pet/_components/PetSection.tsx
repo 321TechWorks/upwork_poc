@@ -11,13 +11,19 @@ import { CantFindFlow } from "./CantFindFlow";
 import { PetWaiverFlow } from "./PetWaiverFlow";
 import { useState } from "react";
 import { KeyValueBlock } from "../../_components/KeyValueBlock";
+import Link from "next/link";
 
 type Props = {
+  licenseId?: string;
   defaultPet?: Pet | null;
   defaultCertificate?: Certificate | null;
 };
 
-export function PetSection({ defaultPet, defaultCertificate }: Props) {
+export function PetSection({
+  licenseId,
+  defaultPet,
+  defaultCertificate,
+}: Props) {
   const [pet, setPet] = useState(defaultPet);
   const [certificate, setCertificate] = useState(defaultCertificate);
 
@@ -173,11 +179,19 @@ export function PetSection({ defaultPet, defaultCertificate }: Props) {
         <div className="flex w-full space-x-4">{content}</div>
       </Section>
       <div className="flex justify-between">
-        <Button className="bg-transparent rounded-md border border-gray-200">
-          Back
-        </Button>
+        <Link
+          href={{
+            pathname: "/review_requirements",
+            search: new URLSearchParams({
+              licenseId: licenseId ?? "",
+            }).toString(),
+          }}
+        >
+          <Button>Back</Button>
+        </Link>
+
         <Button
-          className="bg-red-900 text-white"
+          className="bg-red-primary border-red-primary text-white"
           disabled={!pet}
           onClick={async () => {
             if (pet && certificate) {

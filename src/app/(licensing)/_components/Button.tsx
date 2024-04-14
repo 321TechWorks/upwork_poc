@@ -12,7 +12,7 @@ export function Button({ className, children, ...props }: Props) {
   return (
     <button
       className={twMerge(
-        "text-black rounded-md bg-gray-100 px-8 py-4 disabled:opacity-50",
+        "bg-transparent border-gray-400 rounded-md border px-4 py-2 disabled:opacity-50",
         className,
       )}
       {...props}

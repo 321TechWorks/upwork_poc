@@ -3,16 +3,21 @@
 import * as Accordion from "@radix-ui/react-accordion";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { forwardRef } from "react";
+import { type LinkProps } from "next/link";
 
-type Props = {
-  defaultValue?: string[];
+export type StepsProps = {
   steps: {
     id: string;
-    icon: React.ReactNode;
     title: React.ReactNode;
-    content: React.ReactNode;
+    icon?: React.ReactNode;
+    link?: LinkProps["href"];
+    content?: React.ReactNode;
     disabled?: boolean;
   }[];
+};
+
+type Props = StepsProps & {
+  defaultValue?: string[];
 };
 
 export function Steps({ defaultValue, steps }: Props) {
@@ -24,7 +29,7 @@ export function Steps({ defaultValue, steps }: Props) {
     >
       {steps.map((step) => (
         <AccordionItem key={step.id} value={step.id} disabled={step.disabled}>
-          <div className="flex items-center justify-between px-8">
+          <div className="flex items-center justify-between px-6">
             <div className="flex space-x-4">
               <div>{step.icon}</div>
               <div>{step.title}</div>

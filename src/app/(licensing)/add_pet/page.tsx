@@ -1,11 +1,12 @@
 import { api } from "@pp/trpc/server";
-import { Button } from "@pp/app/(licensing)/_components/Button";
+import { type Pet } from "@pp/domain/pet";
+import { type Certificate } from "@pp/domain/certificate";
 import { Checkbox } from "@pp/app/(licensing)/_components/Checkbox";
 import { Steps } from "@pp/app/(licensing)/_components/Steps";
-import { type Pet } from "@pp/domain/pet";
+import { StepPageLayout } from "@pp/app/(licensing)/_components/StepPageLayout";
+import { StepsNavigation } from "@pp/app/(licensing)/_components/StepsNavigation";
 
 import { PetSection } from "./_components/PetSection";
-import { type Certificate } from "@pp/domain/certificate";
 
 export default async function AddPetPage({
   searchParams,
@@ -23,9 +24,28 @@ export default async function AddPetPage({
     pet = license.pet;
     certificate = license.certificate;
   }
-
   return (
-    <div className="mx-48">
+    <StepPageLayout
+      progress={
+        <StepsNavigation
+          active="pet"
+          steps={[
+            {
+              id: "review",
+              title: "Requirements Reviewed",
+              link: {
+                pathname: "/review_requirements",
+                search: new URLSearchParams({
+                  licenseId: searchParams?.licenseId ?? "",
+                }).toString(),
+              },
+            },
+            { id: "pet", title: "Add Pet" },
+            { id: "license", title: "License Pet" },
+          ]}
+        />
+      }
+    >
       <Steps
         defaultValue={["owner", "pet"]}
         steps={[
@@ -48,11 +68,15 @@ export default async function AddPetPage({
             icon: <Checkbox disabled />,
             title: "Add Pet",
             content: (
-              <PetSection defaultPet={pet} defaultCertificate={certificate} />
+              <PetSection
+                licenseId={searchParams?.licenseId}
+                defaultPet={pet}
+                defaultCertificate={certificate}
+              />
             ),
           },
         ]}
       />
-    </div>
+    </StepPageLayout>
   );
 }

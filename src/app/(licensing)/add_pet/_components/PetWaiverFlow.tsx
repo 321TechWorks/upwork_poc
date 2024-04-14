@@ -23,6 +23,7 @@ export function PetWaiverFlow({ onSave }: Props) {
   return (
     <>
       <Button
+        className="border-gray-50 bg-gray-50"
         onClick={() => {
           setOpen(true);
         }}
@@ -47,7 +48,7 @@ export function PetWaiverFlow({ onSave }: Props) {
               Cancel
             </Button>
             <Button
-              className="bg-red-900 text-white"
+              className="bg-red-primary text-white"
               onClick={petForm.handleSubmit((data) => {
                 onSave([data]);
                 closeAndReset();
