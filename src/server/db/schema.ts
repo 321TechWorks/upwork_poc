@@ -1,5 +1,6 @@
 import {
   bigint,
+  datetime,
   int,
   mysqlTableCreator,
   timestamp,
@@ -34,7 +35,7 @@ export const licenses = createTable("license", {
     .notNull()
     .references(() => certificates.id),
   date: timestamp("date").notNull().defaultNow(),
-  expire: timestamp("expire")
+  expire: datetime("expire")
     .notNull()
     .default(new Date(getOneYearAfterNowTimestamp())),
 });
